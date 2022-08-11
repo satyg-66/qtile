@@ -1,0 +1,141 @@
+#!/bin/env python3
+
+import os
+
+def preinstall():
+    driverToInstall = 'xf86-video-'
+    print('### YOUR GRAPHICAL CONTROLLER ###')
+    os.system('lspci -v | grep -A1 -e VGA -e 3D')
+    print('''
+     1. amdgpu            7. openchrome
+     2. ati               8. sisusb
+     3. dummy             9. vesa
+     4. fbdev            10. vmware
+     5. intel            11. voodoo
+     6. nouveau          12. qxl
+     ''') 
+    while True:
+        choice = input('Please select what driver to install or Q to quit the installation: ')
+        choice = choice.lower()
+
+        if choice == '1' or choice == 'amdgpu':
+            driver = 'amdgpu'
+            driverToInstall += driver
+            break
+        elif choice == '2' or choice == 'ati':
+            driver = 'ati'
+            driverToInstall += driver
+            break
+        elif choice == '3' or choice == 'dummy':
+            driver = 'dummy'
+            driverToInstall += driver
+            break
+        elif choice == '4' or choice == 'fbdev':
+            driver = 'fbdev'
+            driverToInstall += driver
+            break
+        elif choice == '5' or choice == 'intel':
+            driver = 'intel'
+            driverToInstall += driver
+            break
+        elif choice == '6' or choice == 'nouveau':
+            driver = 'nouveau'
+            driverToInstall += driver
+            break
+        elif choice == '7' or choice == 'openchrome':
+            driver = 'openchrome'
+            driverToInstall += driver
+            break
+        elif choice == '8' or choice == 'sisusb':
+            driver = 'sisusb'
+            driverToInstall += driver
+            break
+        elif choice == '9' or choice == 'vesa':
+            driver = 'vesa'
+            driverToInstall += driver
+            break
+        elif choice == '10' or choice == 'vmware':
+            driver = 'vmware'
+            driverToInstall += driver
+            break
+        elif choice == '11' or choice == 'voodoo':
+            driver = 'voodoo'
+            driverToInstall += driver
+            break
+        elif choice == '12' or choice == 'qxl':
+            driver = 'qxl'
+            driverToInstall += driver
+            break
+        elif choice == 'q':
+            quit('You have choosen to exit the installation... Bye!')
+
+    print(f'### INSTALLING {driverToInstall} ###')
+    commands = [f'yes | sudo pacman -S git {driverToInstall}', 'sleep 2', 'cd /opt', 'sudo git clone https://aur.archlinux.org/yay-git.git', "sudo chown -R $USER:$USER ./yay-git", 'cd yay-git', 'makepkg -si', 'sudo yay -Syu']
+    for command in commands:
+        print(command)
+        #os.system(command)
+
+def dependencies():
+    commands = ['yes | pacman -S', 'xorg-server', 'xorg-xinit', 'xorg-apps', 'htop', 'qtile', 'vim', 'firefox', 'xfce4-terminal', 'picom', 'nitrogen', 'unclutter', 'fish', 'emacs', 'exa', 'ttf-jetbrains-mono', 'adobe-source-code-pro-fonts', 'awesome-terminal-fonts', 'ttf-ubuntu-font-family']
+    yays = ['yay -S', 'nerd-fonts-mononoki', 'starship', 'termite']
+    command = ' '.join(commands)
+    yay = ' '.join(yays)
+    print(command)
+    print(yay)
+    #os.system(command)
+    #os.system(yay)
+
+def doomEmacs():
+    gits = ['git clone', 'https://github.com/hlissner/doom-emacs ~/.emacs.d']
+    git = ' '.join(gits)
+    print(git)
+    #os.system(git)
+    print('~/.emacs.d/bin/doom install')
+    #os.system('~/.emacs.d/bin/doom install')
+
+def dotfiles():
+    commands = ['cd', 'git clone https://satyg-66/dotfiles.git',
+    'mkdir ~/.config/fish ~/.config/picom ~/.config/termite ~/.config/x11',
+    'mv ~/dotfiles/termite/config ~/.config/termite/',
+    'mv ~/dotfiles/doom.d/* ~/.doom.d/',
+    'mv ~/dotfiles/fish/config.fish ~/.config/fish/',
+    'mv ~/dotfiles/fish/fish_variables ~/.config/fish/'
+    'mv ~/dotfiles/qtile/config.py ~/.config/qtile',
+    'mv ~/dotfiles/qtile/theme.py ~/.config/qtile'
+    'cp /etc/xdg/picom.conf ~/.config/picom',
+    'rm -rf ~/dotfiles']
+    for command in commands:
+        print(command)
+        #os.system(command)
+
+def xinitrc():
+    contents = ['xset -b', 'setxkbmap -layout se', 'picom --no-fading-openclose &', 'unclutter --jitter 10 --ignore scrolling --start-hidden --fork', 'nitrogen --restore &', 'xrandr -s 1920x1080', 'qtile start']
+    print('touch ~/.xinitrc')
+    #os.system('touche ~/.xinitrc')
+    for content in contents:
+        print(f'echo {content} >> ~/.xinitrc')
+        #os.system(f'echo {content} >> ~/.xinitrc')
+
+def postinstall():
+    os.system('chsh -s $(which fish)')
+    print('### INSTALLATION COMPLETE ###')
+    while True:
+        yn = input('Do you want to reboot into your new system? (y/n): ')
+        
+        if yn == 'y' or yn == 'Y':
+            break
+        if yn == 'n' or yn == 'N':
+            quit()
+    print('sudo reboot')
+    #os.system('sudo reboot')
+
+def main():
+    preinstall()
+    dependencies()
+    doomEmacs()
+    dotfiles()
+    xinitrc()
+    postinstall()
+
+if __name__ == '__main__':
+    main()
