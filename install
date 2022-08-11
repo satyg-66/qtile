@@ -99,7 +99,7 @@ def doomEmacs():
     os.system('~/.emacs.d/bin/doom install')
 
 def dotfiles():
-    commands = ['git clone https://satyg-66/dotfiles.git ~/dotfiles',
+    commands = ['git clone https://github.com/satyg-66/dotfiles.git ~/dotfiles',
     'mkdir ~/.config/fish ~/.config/picom ~/.config/termite ~/.config/x11',
     'mv ~/dotfiles/termite/config ~/.config/termite/',
     'mv ~/dotfiles/doom.d/* ~/.doom.d/',
