@@ -106,9 +106,8 @@ def dotfiles():
     'mv ~/dotfiles/doom.d/* ~/.doom.d/',
     'mv ~/dotfiles/fish/config.fish ~/.config/fish/',
     'mv ~/dotfiles/fish/fish_variables ~/.config/fish/'
-    'mv ~/dotfiles/qtile/config.py ~/.config/qtile',
-    'mv ~/dotfiles/qtile/theme.py ~/.config/qtile'
-    'cp /etc/xdg/picom.conf ~/.config/picom']
+    'mv ~/dotfiles/qtile/* ~/.config/qtile/',
+    'cp /etc/xdg/picom.conf ~/.config/picom/']
     #'rm -rf ~/dotfiles']
     for command in commands:
         #print(command)
