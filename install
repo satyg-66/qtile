@@ -101,6 +101,7 @@ def doomEmacs():
 def dotfiles():
     commands = ['git clone https://github.com/satyg-66/dotfiles.git ~/dotfiles',
     'mkdir ~/.config/fish ~/.config/picom ~/.config/termite ~/.config/x11',
+    'cat ~/qtile/config >> ~/.bashrc && source ~/.bashrc',
     'mv ~/dotfiles/termite/config ~/.config/termite/',
     'mv ~/dotfiles/doom.d/* ~/.doom.d/',
     'mv ~/dotfiles/fish/config.fish ~/.config/fish/',
