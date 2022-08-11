@@ -80,29 +80,23 @@ def preinstall():
     os.chdir('~')
     os.system('sudo yay -Syu')
 
-
-    commands = [f'yes | sudo pacman -S {driverToInstall}', 'sleep 2', 'sudo git clone https://aur.archlinux.org/yay-git.git /opt/yay-git', "sudo chown -R $USER:$USER /opt/yay-git", 'makepkg -si', 'sudo yay -Syu']
-    for command in commands:
-        print(command)
-        #os.system(command)
-
 def dependencies():
     commands = ['yes | pacman -S', 'xorg-server', 'xorg-xinit', 'xorg-apps', 'htop', 'qtile', 'vim', 'firefox', 'xfce4-terminal', 'picom', 'nitrogen', 'unclutter', 'fish', 'emacs', 'exa', 'ttf-jetbrains-mono', 'adobe-source-code-pro-fonts', 'awesome-terminal-fonts', 'ttf-ubuntu-font-family']
     yays = ['yay -S', 'nerd-fonts-mononoki', 'starship', 'termite']
     command = ' '.join(commands)
     yay = ' '.join(yays)
-    print(command)
-    print(yay)
-    #os.system(command)
-    #os.system(yay)
+    #print(command)
+    #print(yay)
+    os.system(command)
+    os.system(yay)
 
 def doomEmacs():
     gits = ['git clone', 'https://github.com/hlissner/doom-emacs ~/.emacs.d']
     git = ' '.join(gits)
-    print(git)
-    #os.system(git)
-    print('~/.emacs.d/bin/doom install')
-    #os.system('~/.emacs.d/bin/doom install')
+    #print(git)
+    os.system(git)
+    #print('~/.emacs.d/bin/doom install')
+    os.system('~/.emacs.d/bin/doom install')
 
 def dotfiles():
     commands = ['git clone https://satyg-66/dotfiles.git ~/dotfiles',
@@ -116,20 +110,20 @@ def dotfiles():
     'sudo cp /etc/xdg/picom.conf ~/.config/picom',
     'rm -rf ~/dotfiles']
     for command in commands:
-        print(command)
-        #os.system(command)
+        #print(command)
+        os.system(command)
 
 def xinitrc():
     contents = ['xset -b', 'setxkbmap -layout se', 'picom --no-fading-openclose &', 'unclutter --jitter 10 --ignore scrolling --start-hidden --fork', 'nitrogen --restore &', 'xrandr -s 1920x1080', 'qtile start']
-    print('touch ~/.xinitrc')
-    #os.system('touche ~/.xinitrc')
+    #print('touch ~/.xinitrc')
+    os.system('touche ~/.xinitrc')
     for content in contents:
-        print(f'echo {content} >> ~/.xinitrc')
-        #os.system(f'echo {content} >> ~/.xinitrc')
+        #print(f'echo {content} >> ~/.xinitrc')
+        os.system(f'echo {content} >> ~/.xinitrc')
 
 def postinstall():
-    print('chsh -s /usr/bin/fish')
-    #os.system('chsh -s /usr/bin/fish')
+    #print('chsh -s /usr/bin/fish')
+    os.system('chsh -s /usr/bin/fish')
     print('### INSTALLATION COMPLETE ###')
     while True:
         yn = input('Do you want to reboot into your new system? (y/n): ')
@@ -138,8 +132,8 @@ def postinstall():
             break
         if yn == 'n' or yn == 'N':
             quit()
-    print('sudo reboot')
-    #os.system('sudo reboot')
+    #print('sudo reboot')
+    os.system('sudo reboot')
 
 def main():
     try:
