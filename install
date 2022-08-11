@@ -130,6 +130,7 @@ def postinstall():
     os.system('sudo reboot')
 
 def main():
+    os.system('mkdir ~/.config')
     preinstall()
     dependencies()
     doomEmacs()
