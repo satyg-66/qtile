@@ -96,14 +96,14 @@ def doomEmacs():
 def dotfiles():
     commands = ['cd', 'git clone https://github.com/satyg-66/dotfiles.git',
     'mkdir ~/.config/fish ~/.config/picom ~/.config/termite ~/.config/x11',
-    'mv ~/dotfiles/termite/config ~/.config/termite/',
-    'mv ~/dotfiles/doom.d/* ~/.doom.d/',
-    'mv ~/dotfiles/fish/config.fish ~/.config/fish/',
-    'mv ~/dotfiles/fish/fish_variables ~/.config/fish/'
-    'mv ~/dotfiles/qtile/config.py ~/.config/qtile',
-    'mv ~/dotfiles/qtile/theme.py ~/.config/qtile'
+    'mv ~/qtile/dotfiles/termite/config ~/.config/termite/',
+    'mv ~/qtile/dotfiles/doom.d/* ~/.doom.d/',
+    'mv ~/qtile/dotfiles/fish/config.fish ~/.config/fish/',
+    'mv ~/qtile/dotfiles/fish/fish_variables ~/.config/fish/'
+    'mv ~/qtile/dotfiles/qtile/config.py ~/.config/qtile',
+    'mv ~/qtile/dotfiles/qtile/theme.py ~/.config/qtile'
     'sudo cp /etc/xdg/picom.conf ~/.config/picom',
-    'rm -rf ~/dotfiles']
+    'rm -rf ~/qtile']
     for command in commands:
         #print(command)
         os.system(command)
