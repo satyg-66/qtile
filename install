@@ -81,7 +81,7 @@ def preinstall():
     os.system('sudo yay -Syu')
 
 def dependencies():
-    commands = ['yes | sudo pacman -S', 'xorg-server', 'xorg-xinit', 'xorg-apps', 'htop', 'qtile', 'vim', 'firefox', 'xfce4-terminal', 'picom', 'nitrogen', 'unclutter', 'fish', 'emacs', 'exa', 'ttf-jetbrains-mono', 'adobe-source-code-pro-fonts', 'awesome-terminal-fonts', 'ttf-ubuntu-font-family']
+    commands = ['sudo pacman -S', 'xorg-server', 'xorg-xinit', 'xorg-apps', 'htop', 'qtile', 'vim', 'firefox', 'xfce4-terminal', 'picom', 'nitrogen', 'unclutter', 'fish', 'emacs', 'exa', 'ttf-jetbrains-mono', 'adobe-source-code-pro-fonts', 'awesome-terminal-fonts', 'ttf-ubuntu-font-family']
     yays = ['yay -S', 'nerd-fonts-mononoki', 'starship', 'termite']
     command = ' '.join(commands)
     yay = ' '.join(yays)
