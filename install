@@ -16,8 +16,7 @@
 # AUTHOR: Jonas Ingemarsson
 # DESC: Auto install Qtile, dependencies and configuring a fresh install of Arch Linux
 # DEPENDENCIES: A fresh arch install with 'git' and 'python3' installed.
-# LAST CHANGE: 2022-08-11
-# NOTE: Today it is hardcoded /home/satyg at one point.
+# LAST CHANGE: 2022-08-13
 
 
 import os
@@ -101,7 +100,7 @@ def preinstall():
         os.system('sudo chown -R $USER:$USER yay-git')
         os.chdir('/opt/yay-git')
         os.system('makepkg -si')
-        os.chdir('/home/satyg')
+        os.chdir(os.path.expanduser('~'))
         os.system('sudo yay -Syu')
     except:
         print('Something went wrong during installation of yay as an AUR helper...')
