@@ -167,7 +167,7 @@ def xinitrc():
 
 def postinstall():
     os.system('chsh -s /usr/bin/fish')
-    os.system('clear)
+    os.system('clear')
     print('### INSTALLATION COMPLETE ###')
 
     while True:
