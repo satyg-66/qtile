@@ -16,7 +16,7 @@
 # AUTHOR: Jonas Ingemarsson
 # DESC: Auto install Qtile, dependencies and configuring a fresh install of Arch Linux
 # DEPENDENCIES: A fresh arch install with 'git' and 'python3' installed.
-# LAST CHANGE: 2022-08-13
+# LAST CHANGE: 2022-08-15
 
 
 import os
@@ -109,23 +109,25 @@ def preinstall():
 
 def dependencies():
     commands = ['sudo pacman -S --noconfirm',
-    'xorg-server','xorg-xinit','xorg-apps','pcmanfm','htop','qtile','vim','firefox',
+    'xorg-server','xorg-xinit','xorg-apps','thunar','htop','qtile','vim','firefox',
     'xfce4-terminal','picom','nitrogen','unclutter','fish','emacs','exa',
     'ttf-jetbrains-mono','adobe-source-code-pro-fonts','awesome-terminal-fonts',
-    'ttf-ubuntu-font-family','archlinux-wallpaper']
-    yays = ["yes '' | yay -S", 'nerd-fonts-mononoki', 'starship', 'termite']
+    'ttf-ubuntu-font-family','archlinux-wallpaper','nomacs','gnome-calculator']
+    yays = ['yay -S --noconfirm','nerd-fonts-mononoki','starship','termite']
     command = ' '.join(commands)
     yay = ' '.join(yays)
 
     os.system(command)
     os.system(yay)
 
-def doomEmacs():
-    gits = ['git clone', 'https://github.com/hlissner/doom-emacs ~/.emacs.d']
+def installGits():
+    gits = ['git clone', 'https://github.com/hlissner/doom-emacs ~/.emacs.d','https://git.suckless.org/dmenu ~/.config/dmenu']
     git = ' '.join(gits)
 
     os.system(git)
-    os.system("yes 'y' | ~/.emacs.d/bin/doom install")
+    os.system('~/.emacs.d/bin/doom install')
+    os.chdir(os.path.expanduser('~/.config/dmenu'))
+    os.system('sudo make clean install')
 
 def dotfiles():
     commands = ['git clone https://github.com/satyg-66/dotfiles.git ~/dotfiles',
@@ -138,6 +140,7 @@ def dotfiles():
                 'mv ~/.config/qtile/config.py ~/.config/qtile/config.py.backup',
                 'mv ~/dotfiles/qtile/* ~/.config/qtile/',
                 'cp /etc/xdg/picom.conf ~/.config/picom/',
+                'cp /etc/vimrc ~/.vimrc && echo \':set number\' >> ~/.vimrc',
                 'sudo sed -i \'s$GRUB_GFXMODE=auto$GRUB_GFXMODE="1024x768"$\' /etc/default/grub',
                 'sudo sed -i \'s$#GRUB_BACKGROUND="/path/to/wallpaper"$GRUB_BACKGROUND="/usr/share/backgrounds/archlinux/simple.png"$\' /etc/default/grub',
                 'sudo grub-mkconfig -o /boot/grub/grub.cfg',
@@ -155,11 +158,11 @@ def dotfiles():
         except:
             print(f'Unable to run the command "{command}"')
             os.system('sleep 5')
+    
+    os.chmod(os.path.expanduser('~/.config/qtile/autostart.sh'), 0o755)
 
 def xinitrc():
-    contents = ['xset -b','setxkbmap -layout se','picom --no-fading-openclose &',
-                'unclutter --jitter 10 --ignore scrolling --start-hidden --fork',
-                'nitrogen --restore &','xrandr -s 1920x1080','qtile start']
+    contents = ['xset -b','setxkbmap -layout se','xrandr -s 1920x1080','qtile start']
 
     os.system('touche ~/.xinitrc')
     for content in contents:
@@ -183,7 +186,7 @@ def postinstall():
 def main():
     preinstall()
     dependencies()
-    doomEmacs()
+    installGits()
     dotfiles()
     xinitrc()
     postinstall()
