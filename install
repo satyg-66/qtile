@@ -20,7 +20,7 @@
 
 
 import os
-from getpas import getpass
+from getpass import getpass
 
 def credentials():
     username = os.getlogin()
