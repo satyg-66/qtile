@@ -170,7 +170,7 @@ def postinstall():
     print('### INSTALLATION COMPLETE ###')
 
     while True:
-        yn = input('Do you want to reboot into your new system? (y/n): ')
+        yn = input('Do you want to reboot into your new system? [Y/n]: ') or 'y'
         
         if yn == 'y' or yn == 'Y':
             break
