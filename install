@@ -108,10 +108,10 @@ def preinstall():
 
 def dependencies():
     commands = ['sudo pacman -S --noconfirm',
-    'xorg-server','xorg-xinit','xorg-apps','thunar','htop','qtile','vim','firefox',
-    'xfce4-terminal','picom','nitrogen','unclutter','fish','emacs','exa',
-    'ttf-jetbrains-mono','adobe-source-code-pro-fonts','awesome-terminal-fonts',
-    'ttf-ubuntu-font-family','archlinux-wallpaper','nomacs','gnome-calculator']
+                'xorg-server','xorg-xinit','xorg-apps','thunar','htop','qtile','vim','firefox',
+                'xfce4-terminal','picom','nitrogen','unclutter','fish','emacs','exa',
+                'ttf-jetbrains-mono','adobe-source-code-pro-fonts','awesome-terminal-fonts',
+                'ttf-ubuntu-font-family','archlinux-wallpaper','nomacs','gnome-calculator']
     yays = ['yay -S --noconfirm','nerd-fonts-mononoki','starship','termite']
     command = ' '.join(commands)
     yay = ' '.join(yays)
@@ -120,9 +120,12 @@ def dependencies():
     os.system(yay)
 
 def installGits():
-    gits = ['https://github.com/hlissner/doom-emacs ~/.emacs.d','https://git.suckless.org/dmenu ~/.config/dmenu']
+    gits = ['https://github.com/hlissner/doom-emacs ~/.emacs.d',
+            'https://git.suckless.org/dmenu ~/.config/dmenu',
+            'https://github.com/dracula/vim.git ~/.vim/pack/themes/start/dracula']
     
     os.system('mkdir ~/.config/dmenu')
+    os.system('mkdir -p ~/.vim/pack/themes/start')
     for git in gits:
         try:
             command = 'git clone '
@@ -135,6 +138,7 @@ def installGits():
     os.system('yes | ~/.emacs.d/bin/doom install')
     os.chdir(os.path.expanduser('~/.config/dmenu'))
     os.system('sudo make clean install')
+    os.system('echo \'packadd! dracula\' >> ~/.vimrc && echo \'syntax enable\' >> ~/.vimrc && echo \'colorscheme dracula\' >> ~/.vimrc 
 
 def dotfiles():
     commands = ['git clone https://github.com/satyg-66/dotfiles.git ~/dotfiles',
