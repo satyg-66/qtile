@@ -126,8 +126,8 @@ def installGits():
 
     os.system(git)
     os.system('~/.emacs.d/bin/doom install')
-    os.chdir(os.path.expanduser('~/.config/dmenu'))
-    os.system('sudo make clean install')
+    #os.chdir(os.path.expanduser('~/.config/dmenu'))
+    #os.system('sudo make clean install')
 
 def dotfiles():
     commands = ['git clone https://github.com/satyg-66/dotfiles.git ~/dotfiles',
