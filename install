@@ -100,7 +100,7 @@ def preinstall():
         os.chdir('/opt')
         os.system('sudo chown -R $USER:$USER yay-git')
         os.chdir('/opt/yay-git')
-        os.system('echo y | makepkg -si')
+        os.system('makepkg -si --noconfirm')
         os.chdir(os.path.expanduser('~'))
         os.system('sudo yay -Syu')
     except:
@@ -113,7 +113,7 @@ def dependencies():
     'xfce4-terminal','picom','nitrogen','unclutter','fish','emacs','exa',
     'ttf-jetbrains-mono','adobe-source-code-pro-fonts','awesome-terminal-fonts',
     'ttf-ubuntu-font-family','archlinux-wallpaper']
-    yays = ['yes "" | yay -S', 'nerd-fonts-mononoki', 'starship', 'termite']
+    yays = ["yes '' | yay -S", 'nerd-fonts-mononoki', 'starship', 'termite']
     command = ' '.join(commands)
     yay = ' '.join(yays)
 
@@ -125,7 +125,7 @@ def doomEmacs():
     git = ' '.join(gits)
 
     os.system(git)
-    os.system('yes "y" | ~/.emacs.d/bin/doom install')
+    os.system("yes 'y' | ~/.emacs.d/bin/doom install")
 
 def dotfiles():
     commands = ['git clone https://github.com/satyg-66/dotfiles.git ~/dotfiles',
