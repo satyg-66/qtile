@@ -1,0 +1,201 @@
+#!/bin/env python3
+
+#
+#
+#                           ,d
+#                           88
+#    ,adPPYba, ,adPPYYba, MM88MMM 8b       d8  ,adPPYb,d8
+#    I8[    "" ""     `Y8   88    `8b     d8' a8"    `Y88
+#     `"Y8ba,  ,adPPPPP88   88     `8b   d8'  8b       88
+#    aa    ]8I 88,    ,88   88,     `8b,d8'   "8a,   ,d88
+#    `"YbbdP"' `"8bbdP"Y8   "Y888     Y88'     `"YbbdP"Y8
+#                                     d8'      aa,    ,88
+#                                    d8'        "Y8bbdP"
+#
+#
+# AUTHOR: Jonas Ingemarsson
+# DESC: Auto install Qtile, dependencies and configuring a fresh install of Arch Linux
+# DEPENDENCIES: A fresh arch install with 'git' and 'python3' installed.
+# LAST CHANGE: 2022-08-13
+
+
+import os
+
+def preinstall():
+    driverToInstall = 'xf86-video-'
+    print('### YOUR GRAPHICAL CONTROLLER ###')
+    os.system('lspci -v | grep -A1 -e VGA -e 3D')
+    print('''
+     1. amdgpu            7. openchrome
+     2. ati               8. sisusb
+     3. dummy             9. vesa
+     4. fbdev            10. vmware
+     5. intel            11. voodoo
+     6. nouveau          12. qxl
+     ''') 
+    
+    while True:
+        choice = input('Please select what driver to install or Q to quit the installation: ')
+        choice = choice.lower()
+
+        if choice == '1' or choice == 'amdgpu':
+            driver = 'amdgpu'
+            driverToInstall += driver
+            break
+        elif choice == '2' or choice == 'ati':
+            driver = 'ati'
+            driverToInstall += driver
+            break
+        elif choice == '3' or choice == 'dummy':
+            driver = 'dummy'
+            driverToInstall += driver
+            break
+        elif choice == '4' or choice == 'fbdev':
+            driver = 'fbdev'
+            driverToInstall += driver
+            break
+        elif choice == '5' or choice == 'intel':
+            driver = 'intel'
+            driverToInstall += driver
+            break
+        elif choice == '6' or choice == 'nouveau':
+            driver = 'nouveau'
+            driverToInstall += driver
+            break
+        elif choice == '7' or choice == 'openchrome':
+            driver = 'openchrome'
+            driverToInstall += driver
+            break
+        elif choice == '8' or choice == 'sisusb':
+            driver = 'sisusb'
+            driverToInstall += driver
+            break
+        elif choice == '9' or choice == 'vesa':
+            driver = 'vesa'
+            driverToInstall += driver
+            break
+        elif choice == '10' or choice == 'vmware':
+            driver = 'vmware'
+            driverToInstall += driver
+            break
+        elif choice == '11' or choice == 'voodoo':
+            driver = 'voodoo'
+            driverToInstall += driver
+            break
+        elif choice == '12' or choice == 'qxl':
+            driver = 'qxl'
+            driverToInstall += driver
+            break
+        elif choice == 'q':
+            quit('You have choosen to exit the installation... Bye!')
+
+    try:
+        os.system(f'sudo pacman -S --noconfirm {driverToInstall}')
+    except:
+        print(f'Unable to install "{driverToInstall}"... Maybe it have changed name?')
+        os.system('sleep 5')
+    try:
+        os.system('sudo git clone https://aur.archlinux.org/yay-git.git /opt/yay-git')
+        os.chdir('/opt')
+        os.system('sudo chown -R $USER:$USER yay-git')
+        os.chdir('/opt/yay-git')
+        os.system('makepkg -si --noconfirm')
+        os.chdir(os.path.expanduser('~'))
+        os.system('sudo yay -Syu')
+    except:
+        print('Something went wrong during installation of yay as an AUR helper...')
+        os.system('sleep 5')
+
+def dependencies():
+    commands = ['sudo pacman -S --noconfirm',
+    'xorg-server','xorg-xinit','xorg-apps','thunar','htop','qtile','vim','firefox',
+    'xfce4-terminal','picom','nitrogen','unclutter','fish','emacs','exa',
+    'ttf-jetbrains-mono','adobe-source-code-pro-fonts','awesome-terminal-fonts',
+    'ttf-ubuntu-font-family','archlinux-wallpaper','nomacs','gnome-calculator']
+    yays = ['yay -S --noconfirm','nerd-fonts-mononoki','starship','termite']
+    command = ' '.join(commands)
+    yay = ' '.join(yays)
+
+    os.system(command)
+    os.system(yay)
+
+def installGits():
+    command = 'git clone'
+    gits = ['https://github.com/hlissner/doom-emacs ~/.emacs.d','https://git.suckless.org/dmenu ~/.config/dmenu']
+    
+    for git in gits:
+        try:
+            os.system(command, git)
+        except:
+            print(f'Something went wrong during the installation of {git}')
+            os.system('sleep 5')
+
+    os.system(git)
+    os.system('~/.emacs.d/bin/doom install')
+    os.chdir(os.path.expanduser('~/.config/dmenu'))
+    os.system('sudo make clean install')
+
+def dotfiles():
+    commands = ['git clone https://github.com/satyg-66/dotfiles.git ~/dotfiles',
+                'mkdir ~/.config/fish ~/.config/picom ~/.config/termite ~/.config/x11 ~/.config/qtile',
+                'cat ~/qtile/config >> ~/.bashrc && source ~/.bashrc',
+                'mv ~/dotfiles/termite/config ~/.config/termite/',
+                'mv ~/dotfiles/doom.d/* ~/.doom.d/',
+                'mv ~/dotfiles/fish/config.fish ~/.config/fish/',
+                'mv ~/dotfiles/fish/fish_variables ~/.config/fish/',
+                'mv ~/.config/qtile/config.py ~/.config/qtile/config.py.backup',
+                'mv ~/dotfiles/qtile/* ~/.config/qtile/',
+                'cp /etc/xdg/picom.conf ~/.config/picom/',
+                'cp /etc/vimrc ~/.vimrc && echo \':set number\' >> ~/.vimrc',
+                'sudo sed -i \'s$GRUB_GFXMODE=auto$GRUB_GFXMODE="1024x768"$\' /etc/default/grub',
+                'sudo sed -i \'s$#GRUB_BACKGROUND="/path/to/wallpaper"$GRUB_BACKGROUND="/usr/share/backgrounds/archlinux/simple.png"$\' /etc/default/grub',
+                'sudo grub-mkconfig -o /boot/grub/grub.cfg',
+                'rm -rf ~/dotfiles ~/qtile']
+
+    try:
+        os.system('mkdir ~/.config')
+    except:
+        print('Unable to create ~/.config... Maybe all ready created?')
+        os.system('sleep 5')
+
+    for command in commands:
+        try:
+            os.system(command)
+        except:
+            print(f'Unable to run the command "{command}"')
+            os.system('sleep 5')
+    
+    os.chmod(os.path.expanduser('~/.config/qtile/autostart.sh'), 0o755)
+
+def xinitrc():
+    contents = ['xset -b','setxkbmap -layout se','xrandr -s 1920x1080','qtile start']
+
+    os.system('touche ~/.xinitrc')
+    for content in contents:
+        os.system(f'echo {content} >> ~/.xinitrc')
+
+def postinstall():
+    os.system('chsh -s /usr/bin/fish')
+    os.system('clear')
+    print('### INSTALLATION COMPLETE ###')
+
+    while True:
+        yn = input('Do you want to reboot into your new system? [Y/n]: ') or 'y'
+        
+        if yn == 'y' or yn == 'Y':
+            break
+        if yn == 'n' or yn == 'N':
+            quit()
+
+    os.system('sudo reboot')
+
+def main():
+    preinstall()
+    dependencies()
+    installGits()
+    dotfiles()
+    xinitrc()
+    postinstall()
+
+if __name__ == '__main__':
+    main()
