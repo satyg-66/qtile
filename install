@@ -100,7 +100,7 @@ def preinstall():
         os.chdir('/opt')
         os.system('sudo chown -R $USER:$USER yay-git')
         os.chdir('/opt/yay-git')
-        os.system('makepkg -si')
+        os.system('echo y | makepkg -si')
         os.chdir(os.path.expanduser('~'))
         os.system('sudo yay -Syu')
     except:
