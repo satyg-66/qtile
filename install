@@ -123,6 +123,7 @@ def installGits():
     command = 'git clone'
     gits = ['https://github.com/hlissner/doom-emacs ~/.emacs.d','https://git.suckless.org/dmenu ~/.config/dmenu']
     
+    os.system('mkdir ~/.config/dmenu')
     for git in gits:
         try:
             os.system(command, git)
