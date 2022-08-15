@@ -132,7 +132,7 @@ def installGits():
             print(f'Something went wrong during the installation of {git}')
             os.system('sleep 5')
 
-    os.system('~/.emacs.d/bin/doom install')
+    os.system("echo 'y' | ~/.emacs.d/bin/doom install")
     os.chdir(os.path.expanduser('~/.config/dmenu'))
     os.system('sudo make clean install')
 
