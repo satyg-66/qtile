@@ -91,7 +91,7 @@ def preinstall():
             quit('You have choosen to exit the installation... Bye!')
 
     try:
-        os.system(f'yes | sudo pacman -S {driverToInstall}')
+        os.system(f'sudo pacman -S --noconfirm {driverToInstall}')
     except:
         print(f'Unable to install "{driverToInstall}"... Maybe it have changed name?')
         os.system('sleep 5')
@@ -108,7 +108,7 @@ def preinstall():
         os.system('sleep 5')
 
 def dependencies():
-    commands = ['yes "" | sudo pacman -S',
+    commands = ['sudo pacman -S --noconfirm',
     'xorg-server','xorg-xinit','xorg-apps','pcmanfm','htop','qtile','vim','firefox',
     'xfce4-terminal','picom','nitrogen','unclutter','fish','emacs','exa',
     'ttf-jetbrains-mono','adobe-source-code-pro-fonts','awesome-terminal-fonts',
