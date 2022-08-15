@@ -121,7 +121,7 @@ def dependencies():
     os.system(yay)
 
 def installGits():
-    gits = ['git clone', 'https://github.com/hlissner/doom-emacs ~/.emacs.d','https://git.suckless.org/dmenu ~/.config/dmenu']
+    gits = ['git clone', 'https://github.com/hlissner/doom-emacs ~/.emacs.d']
     git = ' '.join(gits)
 
     os.system(git)
