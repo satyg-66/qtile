@@ -113,12 +113,12 @@ def preinstall(password):
         os.system('sleep 5')
 
 def dependencies():
-    commands = ['yes '' | sudo pacman -S',
+    commands = ['yes "" | sudo pacman -S',
     'xorg-server','xorg-xinit','xorg-apps','pcmanfm','htop','qtile','vim','firefox',
     'xfce4-terminal','picom','nitrogen','unclutter','fish','emacs','exa',
     'ttf-jetbrains-mono','adobe-source-code-pro-fonts','awesome-terminal-fonts',
     'ttf-ubuntu-font-family','archlinux-wallpaper']
-    yays = ['yes '' | yay -S', 'nerd-fonts-mononoki', 'starship', 'termite']
+    yays = ['yes "" | yay -S', 'nerd-fonts-mononoki', 'starship', 'termite']
     command = ' '.join(commands)
     yay = ' '.join(yays)
 
@@ -130,7 +130,7 @@ def doomEmacs():
     git = ' '.join(gits)
 
     os.system(git)
-    os.system('yes 'y' | ~/.emacs.d/bin/doom install')
+    os.system('yes "y" | ~/.emacs.d/bin/doom install')
 
 def dotfiles(password):
     commands = ['git clone https://github.com/satyg-66/dotfiles.git ~/dotfiles',
